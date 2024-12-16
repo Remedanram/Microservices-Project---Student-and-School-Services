@@ -1,0 +1,37 @@
+eureka:
+  instance:
+    hostname: localhost
+  client:
+    service-url:
+      default-zone: https://${eureka.instance.hostname}:${server.port}/eureka/
+    register-with-eureka: true
+    fetch-registry: true
+server:
+  port: 8222
+spring:
+  application:
+    name: gateway
+  config:
+    import: optional:config server:http://localhost:8888
+  cloud:
+    gateway:
+      discovery:
+        locator:
+          enabled: true
+      routes:
+        - id: schools
+          uri: lb://schools
+          predicates:
+            - Path=/api/v1/schools/**
+        - id: students
+          uri: lb://students
+          predicates:
+            - Path=/api/v1/students/**
+logging:
+  level:
+    org.springframework.cloud.gateway: DEBUG
+    org.springframework.web: DEBUG
+management:
+  tracing:
+    sampling:
+      probability: 1.0

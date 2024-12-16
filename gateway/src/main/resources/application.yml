@@ -1,0 +1,30 @@
+#eureka:
+#  client:
+#    register-with-eureka: true
+#    fetch-registry: true
+#server:
+#  port: 8222
+spring:
+  application:
+    name: gateway
+  config:
+    import: optional:configserver:http://localhost:8888
+
+#  cloud:
+#    gateway:
+#      discovery:
+#        locator:
+#          enabled: true
+#      routes:
+#        - id: schools
+#          uri: lb://schools
+#          predicates:
+#            - Path=/api/v1/schools/**
+#        - id: students
+#          uri: lb://students
+#          predicates:
+#            - Path=/api/v1/students/**
+#logging:
+#  level:
+#    org.springframework.cloud.gateway: DEBUG
+#    org.springframework.web: DEBUG
